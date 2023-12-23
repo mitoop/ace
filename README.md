@@ -5,10 +5,12 @@
 
 更多命令:
 ```shell
+ace // ace php 命令的等效命令
 ace php
 ace composer
 ace pecl
 ```
+
 `ace`命令会按照 `ace.json`, `composer.json`, 系统环境变量的`PHP`, 这个顺序去寻找最合适的`PHP`版本.
 
 也就是如果您在当前目录定义了`ace.json`, 那么`ace`命令会优先使用`ace.json`中定义的`PHP`版本.
