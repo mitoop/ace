@@ -40,7 +40,7 @@ composer global require mitoop/ace
 2. `ace` 选择`PHP`版本的策略是积极的, 勇敢的, 所以如果你定义的`php`版本是 `^7.1`, 而你本地同时安装了 `php@7.1`,`php@7.2`,`php@7.3`,`php@7.4`,`php@8.0`版本,
 那么`ace`会选择最高版本的`php@7.x`版本, 也就是`php@7.4`版本. 此种情况下, 如果您需要特殊指定一个版本, 请新建一个`ace.json`文件, 并指定版本号.
 3. 如果您不太熟悉`PHP`配置相关, 可能需要注意, 多版本`PHP`同时工作需要更改`php-fpm`的监听端口, 因为所有版本`PHP`默认都是监听`9000`端口, 所以需要更改`php-fpm`的监听端口, 或者使用`unix socket`文件方式来保持同时启用.
-4. `macOS`系统下安装老版本`PHP`可使用 [https://github.com/shivammathur/homebrew-php](`https://github.com/shivammathur/homebrew-php`)
+4. `macOS`系统下安装老版本`PHP`可使用 [https://github.com/shivammathur/homebrew-php](https://github.com/shivammathur/homebrew-php)
 
 ## ace.json 例子
 版本定义遵循语义化版本约束 [https://semver.org/lang/zh-CN/](https://semver.org/lang/zh-CN/)
