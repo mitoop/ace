@@ -53,8 +53,14 @@ then
     $PECL "${@:2}"
     exit
 
-# Error out if we can't find a command to run
+# hello
+elif [[ "$1" = "hello" ]]
+then
+    echo "Hello, It's Ace!"
+    exit
+
+# Default to running the command with the "php" executable on the isolated site
 else
-   echo "We can't find a command to run. Quitting for safety."
+   $PHP "${@:1}"
    exit
 fi
