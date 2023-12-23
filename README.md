@@ -32,7 +32,12 @@ ace pecl install redis # 安装当前 PHP 版本的 redis 扩展
 
 ## 安装
 ```shell
+# 全新安装
 composer global require mitoop/ace
+
+# 升级版本 先移除旧版本再安装新版本
+composer global remove mitoop/ace 
+composer global require mitoop/ace 
 ```
 
 ## 注意
