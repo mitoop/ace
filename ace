@@ -61,12 +61,6 @@ then
 
 # Default to running the command with the "php" executable on the isolated site
 else
-   if [ -n "$1" ]; then
-     echo "Hello, It's Ace!"
-     echo "We do not support the '$1' command."
-     exit
-   else
-     $PHP "${@:1}"
-     exit
-   fi
+   $PHP "${@:1}"
+   exit
 fi
