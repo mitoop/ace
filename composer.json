@@ -1,0 +1,25 @@
+{
+    "name": "mitoop/ace",
+    "description": "Support multiple PHP versions in macOS",
+    "type": "library",
+    "require": {
+        "php": "^7.0|^8.0",
+        "ext-json": "*",
+        "composer/semver": "^3.4"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ace\\": "cli/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mitoop",
+            "email": "me@mitoop.com"
+        }
+    ],
+    "bin": [
+        "ace"
+    ]
+}

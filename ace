@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+SOURCE="${BASH_SOURCE[0]}"
+
+if [[ -L "$SOURCE" ]]
+then
+    DIR=$(php -r "echo dirname(realpath('$SOURCE'));")
+else
+    DIR="$( cd "$( dirname "$SOURCE" )" && pwd )"
+fi
+
+if [ ! -f "$DIR/cli/ace" ]
+then
+    DIR=$(php -r "echo realpath('$DIR/../mitoop/ace');")
+fi
+
+# Get a command-line executable we can use for php that's 8+; if this
+# is the inside loop (Valet runs itself 2x in some settings), skip
+# checking and pulling again by reading the exported env var
+if [[ "$PHP_EXECUTABLE" = "" ]]
+then
+    PHP="$(php $DIR/cli/find-usable-php.php)"
+
+    # Validate output before running it on the CLI
+    if [[ ! -f "$PHP" ]]; then
+        echo "Error finding executable PHP. Quitting for safety."
+        echo "Provided output from find-usable-php.php:"
+        echo $PHP
+        exit
+    fi
+
+    export PHP_EXECUTABLE="$PHP"
+else
+    PHP="$PHP_EXECUTABLE"
+fi
+
+# Proxy PHP commands to the "php" executable on the isolated site
+if [[ "$1" = "php" ]]
+then
+    $PHP "${@:2}"
+    exit
+
+# Proxy Composer commands with the "php" executable on the isolated site
+elif [[ "$1" = "composer" ]]
+then
+    $PHP $(which composer) "${@:2}"
+    exit
+
+# Proxy pecl commands with the "php" executable on the isolated site
+elif [[ "$1" = "pecl" ]]
+then
+    PECL="${PHP%php}pecl"
+    $PECL "${@:2}"
+    exit
+
+# Error out if we can't find a command to run
+else
+   echo "We can't find a command to run. Quitting for safety."
+   exit
+fi
