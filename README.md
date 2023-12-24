@@ -50,7 +50,13 @@ composer global require mitoop/ace
 4. 如果您不太熟悉`PHP`配置相关, 可能需要注意, 多版本`PHP`同时工作需要更改`php-fpm`的监听端口, 因为所有版本`PHP`默认都是监听`9000`端口, 所以需要更改`php-fpm`的监听端口, 或者使用`unix socket`文件方式来保持同时启用.
 5. `macOS`系统下安装老版本`PHP`可使用 [https://github.com/shivammathur/homebrew-php](https://github.com/shivammathur/homebrew-php)
 6. 多版本`php`同时安装同一扩展时, 可能遇到的问题, `PHP8.0`下安装了`redis`扩展, 这时切换到`PHP7.4`安装`redis`扩展, `pecl`会提示已安装, 需要在`PHP7.4`下先执行卸载`redis`扩展命令, 再安装即可(这样两个版本都安装了`redis`扩展).
-
+7. 当你遇到这个问题 `Composer 2.3.0 dropped support for PHP <7.2.5 and you are running 7.1.33, please upgrade PHP or use Composer 2.2 LTS via "composer self-update --2.2". Aborting.`
+   
+   这是因为高版本的`composer`要求`PHP`版本大于等于`7.2.5`, 如果你正在同时使用高版本`PHP`(>=7.2.5)与低版本`PHP`(<7.2.5), 那么你可以安装`composer 2.2.x LTS`长期维护版. 长期维护版本支持`PHP 5.3.2+`版本.
+   
+   详见 [https://getcomposer.org/doc/00-intro.md#system-requirements](https://getcomposer.org/doc/00-intro.md#system-requirements)
+   
+   安装LTS版本: `composer self-update --2.2`, 如果报错请加`sudo`
 ## ace.json 例子
 版本定义遵循语义化版本约束 [https://semver.org/lang/zh-CN/](https://semver.org/lang/zh-CN/)
 ```json
