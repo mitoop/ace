@@ -9,11 +9,13 @@
 
 更多命令:
 ```shell
-# ace 等同于执行 ace php
-ace 
+ace # ace 等同于执行 ace php
 ace php
 ace composer
 ace pecl
+ace clear # 清除 ace 缓存
+ace hello # Hello Ace!
+
 # 调用
 ace -v # 查看当前 PHP 版本
 ace php -v # 查看当前 PHP 版本
@@ -44,8 +46,9 @@ composer global require mitoop/ace
 1. `ace` 支持的`PHP`版本为 `>=7.0`
 2. `ace` 选择`PHP`版本的策略是积极的, 勇敢的, 所以如果你定义的`php`版本是 `^7.1`, 而你本地同时安装了 `php@7.1`,`php@7.2`,`php@7.3`,`php@7.4`,`php@8.0`版本,
 那么`ace`会选择最高版本的`php@7.x`版本, 也就是`php@7.4`版本. 此种情况下, 如果您需要特殊指定一个版本, 请新建一个`ace.json`文件, 并指定版本号.
-3. 如果您不太熟悉`PHP`配置相关, 可能需要注意, 多版本`PHP`同时工作需要更改`php-fpm`的监听端口, 因为所有版本`PHP`默认都是监听`9000`端口, 所以需要更改`php-fpm`的监听端口, 或者使用`unix socket`文件方式来保持同时启用.
-4. `macOS`系统下安装老版本`PHP`可使用 [https://github.com/shivammathur/homebrew-php](https://github.com/shivammathur/homebrew-php)
+3. `ace` 首次执行会缓存所有的`PHP`版本以加快之后的执行速度, 当您新安装了`PHP`版本或者移除了一些`PHP`版本时, 需要执行 `ace clear` 命令来移除缓存.
+4. 如果您不太熟悉`PHP`配置相关, 可能需要注意, 多版本`PHP`同时工作需要更改`php-fpm`的监听端口, 因为所有版本`PHP`默认都是监听`9000`端口, 所以需要更改`php-fpm`的监听端口, 或者使用`unix socket`文件方式来保持同时启用.
+5. `macOS`系统下安装老版本`PHP`可使用 [https://github.com/shivammathur/homebrew-php](https://github.com/shivammathur/homebrew-php)
 
 ## ace.json 例子
 版本定义遵循语义化版本约束 [https://semver.org/lang/zh-CN/](https://semver.org/lang/zh-CN/)

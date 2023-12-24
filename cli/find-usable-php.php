@@ -13,14 +13,22 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     require_once getenv('HOME') . '/.composer/vendor/autoload.php';
 }
 
-$phps = explode(PHP_EOL, trim(shell_exec('brew list --formula | grep php')));
+// Cache and speed up the process
+$cache = __DIR__ . '/../phps.cache';
+if (file_exists($cache)) {
+    $sortPhps = $phps = json_decode(file_get_contents($cache), true);
+} else {
+    $phps = explode(PHP_EOL, trim(shell_exec('brew list --formula | grep php')));
 
-// Normalize version numbers
-$sortPhps = $phps = array_reduce($phps, function ($carry, $php) {
-    $carry[$php] = presumePhpVersionFromBrewFormulaName($php);
+    // Normalize version numbers
+    $sortPhps = $phps = array_reduce($phps, function ($carry, $php) {
+        $carry[$php] = presumePhpVersionFromBrewFormulaName($php);
 
-    return $carry;
-}, []);
+        return $carry;
+    }, []);
+
+    file_put_contents($cache, json_encode($phps));
+}
 
 // Sort the newest version to the oldest
 sort($sortPhps);
@@ -33,13 +41,13 @@ $foundVersion = reset($sortPhps);
 $constraints = null;
 $dir = trim(shell_exec('pwd'));
 
-if (file_exists($dir.'/ace.json')) {
-    if (isset(json_decode(file_get_contents($dir.'/ace.json'), true)['php'])) {
-        $constraints = json_decode(file_get_contents($dir.'/ace.json'), true)['php'];
+if (file_exists($dir . '/ace.json')) {
+    if (isset(json_decode(file_get_contents($dir . '/ace.json'), true)['php'])) {
+        $constraints = json_decode(file_get_contents($dir . '/ace.json'), true)['php'];
     }
-} elseif (file_exists($dir.'/composer.json')) {
-    if (isset(json_decode(file_get_contents($dir.'/composer.json'), true)['require']['php'])) {
-        $constraints = json_decode(file_get_contents($dir.'/composer.json'), true)['require']['php'];
+} elseif (file_exists($dir . '/composer.json')) {
+    if (isset(json_decode(file_get_contents($dir . '/composer.json'), true)['require']['php'])) {
+        $constraints = json_decode(file_get_contents($dir . '/composer.json'), true)['require']['php'];
     }
 }
 
@@ -73,17 +81,17 @@ function getPhpExecutablePath(string $phpFormulaName = null)
     $brewPrefix = exec('printf $(brew --prefix)');
 
     // Check the default `/opt/homebrew/opt/php@8.1/bin/php` location first
-    if (file_exists($brewPrefix."/opt/{$phpFormulaName}/bin/php")) {
-        return $brewPrefix."/opt/{$phpFormulaName}/bin/php";
+    if (file_exists($brewPrefix . "/opt/{$phpFormulaName}/bin/php")) {
+        return $brewPrefix . "/opt/{$phpFormulaName}/bin/php";
     }
 
     // Check the `/opt/homebrew/opt/php71/bin/php` location for older installations
     $oldPhpFormulaName = str_replace(['@', '.'], '', $phpFormulaName); // php@7.1 to php71
-    if (file_exists($brewPrefix."/opt/{$oldPhpFormulaName}/bin/php")) {
-        return $brewPrefix."/opt/{$oldPhpFormulaName}/bin/php";
+    if (file_exists($brewPrefix . "/opt/{$oldPhpFormulaName}/bin/php")) {
+        return $brewPrefix . "/opt/{$oldPhpFormulaName}/bin/php";
     }
 
-    throw new Exception('Cannot find an executable path for provided PHP version: '.$phpFormulaName);
+    throw new Exception('Cannot find an executable path for provided PHP version: ' . $phpFormulaName);
 }
 
 function presumePhpVersionFromBrewFormulaName(string $formulaName)
@@ -92,7 +100,7 @@ function presumePhpVersionFromBrewFormulaName(string $formulaName)
         // Figure out its link
         $details = json_decode(shell_exec("brew info $formulaName --json"));
 
-        if (! empty($details[0]->aliases[0])) {
+        if (!empty($details[0]->aliases[0])) {
             $formulaName = $details[0]->aliases[0];
         } else {
             return null;

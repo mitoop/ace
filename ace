@@ -14,6 +14,20 @@ then
     DIR=$(php -r "echo realpath('$DIR/../mitoop/ace');")
 fi
 
+# Clear Remove php versions cache
+if [[ "$1" = "clear" ]]
+then
+    cache="$DIR/phps.cache"
+    [ -e "$cache" ] && rm "$cache"
+    exit
+
+# hello
+elif [[ "$1" = "hello" ]]
+then
+    echo "Hello, It's Ace!"
+    exit
+fi
+
 # Get a command-line executable we can use for php that's 8+; if this
 # is the inside loop (Valet runs itself 2x in some settings), skip
 # checking and pulling again by reading the exported env var
@@ -51,12 +65,6 @@ elif [[ "$1" = "pecl" ]]
 then
     PECL="${PHP%php}pecl"
     $PECL "${@:2}"
-    exit
-
-# hello
-elif [[ "$1" = "hello" ]]
-then
-    echo "Hello, It's Ace!"
     exit
 
 # Default to running the command with the "php" executable on the isolated site
