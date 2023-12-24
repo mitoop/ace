@@ -14,23 +14,25 @@ then
     DIR=$(php -r "echo realpath('$DIR/../mitoop/ace');")
 fi
 
-# Clear Remove php versions cache
+# Clear
+# Upon first execution, Ace caches all PHP versions to improve subsequent execution speed.
+# When you install or remove PHP versions, you need clear the cache for getting fresh PHP versions.
+# To clear the cache, you can use the ace clear command.
+# And then the cache will be automatically rebuilt during the next run.
 if [[ "$1" = "clear" ]]
 then
     cache="$DIR/phps.cache"
     [ -e "$cache" ] && rm "$cache"
     exit
 
-# hello
+# Hello
 elif [[ "$1" = "hello" ]]
 then
     echo "Hello, It's Ace!"
     exit
 fi
 
-# Get a command-line executable we can use for php that's 8+; if this
-# is the inside loop (Valet runs itself 2x in some settings), skip
-# checking and pulling again by reading the exported env var
+# Get the PHP executable to use
 if [[ "$PHP_EXECUTABLE" = "" ]]
 then
     PHP="$(php $DIR/cli/find-usable-php.php)"
@@ -38,8 +40,7 @@ then
     # Validate output before running it on the CLI
     if [[ ! -f "$PHP" ]]; then
         echo "Error finding executable PHP. Quitting for safety."
-        echo "Provided output from find-usable-php.php:"
-        echo $PHP
+        echo "$PHP not exists. Please check."
         exit
     fi
 
