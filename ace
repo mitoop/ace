@@ -40,7 +40,10 @@ then
     # Validate output before running it on the CLI
     if [[ ! -f "$PHP" ]]; then
         echo "Error finding executable PHP. Quitting for safety."
-        echo "$PHP not exists. Please check."
+        echo "Error: $PHP not exists."
+        cache="$DIR/phps.cache"
+        [ -e "$cache" ] && rm "$cache"
+        echo "It might be caused by caching. We have already cleared the cache. You can try again."
         exit
     fi
 
