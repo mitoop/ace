@@ -24,8 +24,12 @@ then
     cache="$DIR/phps.cache"
     [ -e "$cache" ] && rm "$cache"
     exit
-
-# Hello
+# list
+elif [[ "$1" = "list" ]]
+then
+    brew list --formula | grep php
+    exit
+# hello
 elif [[ "$1" = "hello" ]]
 then
     echo "Hello, It's Ace!"
