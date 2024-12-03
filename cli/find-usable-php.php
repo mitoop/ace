@@ -76,7 +76,7 @@ echo getPhpExecutablePath(array_search($foundVersion, $phps));
  *
  * @throws Exception
  */
-function getPhpExecutablePath(string $phpFormulaName = null)
+function getPhpExecutablePath(?string $phpFormulaName = null)
 {
     $brewPrefix = exec('printf $(brew --prefix)');
 
