@@ -3,7 +3,7 @@
     "description": "Support multiple PHP versions in macOS",
     "type": "library",
     "require": {
-        "php": "^7.0|^8.0",
+        "php": "^7.1|^8.0",
         "ext-json": "*",
         "composer/semver": "^3.4"
     },
