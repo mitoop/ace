@@ -1,5 +1,5 @@
 <h1 align="center">Ace</h1>
-<p align="center">macOS 下优雅管理多版本 PHP 的命令行工具</p>
+<p align="center">🥇 macOS 下优雅管理多版本 PHP 的命令行工具</p>
 
 ---
 
