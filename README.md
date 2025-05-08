@@ -50,10 +50,8 @@ Ace 会按照以下优先级查找项目所需 PHP 版本：
 2. 当前目录中的 `composer.json`
 3. 系统环境变量中的默认 PHP 版本
 
-例如：
-
+例如：`ace.json` 文件示例
 ```json
-// ace.json 示例
 {
   "php": "^7.4.0"
 }
