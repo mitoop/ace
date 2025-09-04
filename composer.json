@@ -4,8 +4,7 @@
     "type": "library",
     "require": {
         "php": "^7.1|^8.0",
-        "ext-json": "*",
-        "composer/semver": "^3.4"
+        "ext-json": "*"
     },
     "license": "MIT",
     "autoload": {
